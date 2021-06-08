@@ -7,12 +7,11 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.toast.SystemToast;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.TranslatableText;
+import com.mojang.blaze3d.platform.InputConstants;
 
-import org.lwjgl.glfw.GLFW;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.SystemToast;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ReloadAudioDrivers implements ClientModInitializer {
 
@@ -27,27 +26,27 @@ public class ReloadAudioDrivers implements ClientModInitializer {
 	}
 
 	private static void onKeyInputEvent(KeyInputEvent event) {
-		if(event.getAction() != GLFW.GLFW_PRESS) return;
-		MinecraftClient client = MinecraftClient.getInstance();
-		if(client.currentScreen == null){
-			if(InputUtil.isKeyPressed(client.getWindow().getHandle(), GLFW.GLFW_KEY_F3)){
-				if (event.getKey() == GLFW.GLFW_KEY_R){
-					client.keyboard.switchF3State = true;
-					client.getSoundManager().soundSystem.reloadSounds();
+		if(event.getAction() != InputConstants.PRESS) return;
+		Minecraft client = Minecraft.getInstance();
+		if(client.screen == null){
+			if(InputConstants.isKeyDown(client.getWindow().getWindow(), InputConstants.KEY_F3)){
+				if (event.getKey() == InputConstants.KEY_R){
+					client.keyboardHandler.handledDebugKey = true;
+					client.getSoundManager().soundEngine.reload();
 					showToast();
-				}else if (event.getKey() == GLFW.GLFW_KEY_Q){
-					client.inGameHud.getChatHud().addMessage(new TranslatableText("reload_audio_driver.details"));
+				}else if (event.getKey() == InputConstants.KEY_Q){
+					client.gui.getChat().addMessage(new TranslatableComponent("reload_audio_driver.details"));
 				}
 			}
 		}
 	}
 
 	private static void showToast(){
-		SystemToast.show(
-				MinecraftClient.getInstance().getToastManager(),
-				SystemToast.Type.TUTORIAL_HINT,
-				new TranslatableText("reload_audio_driver.toast.title"),
-				new TranslatableText("reload_audio_driver.toast.body.success")
+		SystemToast.add(
+				Minecraft.getInstance().getToasts(),
+				SystemToast.SystemToastIds.TUTORIAL_HINT,
+				new TranslatableComponent("reload_audio_driver.toast.title"),
+				new TranslatableComponent("reload_audio_driver.toast.body.success")
 		);
 	}
 }

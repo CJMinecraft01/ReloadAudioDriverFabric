@@ -1,13 +1,9 @@
 package cjminecraft.rad.event;
 
-import net.minecraft.client.util.InputUtil;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.platform.InputConstants;
 
 /**
  * This event fires when a keyboard input is detected.
- *
- * This class is an exact copy from forge code
- * Source: https://github.com/MinecraftForge/MinecraftForge
  */
 public class KeyInputEvent {
 
@@ -27,9 +23,9 @@ public class KeyInputEvent {
     /**
      * Integer representing the key's action.
      *
-     * @see GLFW#GLFW_PRESS
-     * @see GLFW#GLFW_RELEASE
-     * @see GLFW#GLFW_REPEAT
+     * @see InputConstants#PRESS
+     * @see InputConstants#RELEASE
+     * @see InputConstants#REPEAT
      */
     public int getAction(){
         return action;
@@ -39,7 +35,7 @@ public class KeyInputEvent {
      * The keyboard key that triggered this event.
      * https://www.glfw.org/docs/latest/group__keys.html
      *
-     * @see GLFW key constants starting with "GLFW_KEY_"
+     * @see InputConstants key constants starting with "GLFW_KEY_"
      */
     public int getKey() {
         return key;
@@ -47,12 +43,8 @@ public class KeyInputEvent {
 
     /**
      * Bit field representing the modifier keys pressed.
-     * https://www.glfw.org/docs/latest/group__mods.html
      *
-     * @see GLFW#GLFW_MOD_SHIFT
-     * @see GLFW#GLFW_MOD_CONTROL
-     * @see GLFW#GLFW_MOD_ALT
-     * @see GLFW#GLFW_MOD_SUPER
+     * @see InputConstants#MOD_CONTROL
      */
     public int getModifiers() {
         return modifiers;
@@ -60,7 +52,7 @@ public class KeyInputEvent {
 
     /**
      * Platform-specific scan code.
-     * Used for {@link InputUtil#fromKeyCode(int, int)}
+     * Used for {@link InputConstants#getKey(int, int)}
      *
      * The scan code is unique for every key, regardless of whether it has a key code.
      * Scan codes are platform-specific but consistent over time, so keys will have different scan codes depending
