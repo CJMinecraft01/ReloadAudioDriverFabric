@@ -11,7 +11,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.SystemToast;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 
 public class ReloadAudioDrivers implements ClientModInitializer {
 
@@ -35,7 +35,7 @@ public class ReloadAudioDrivers implements ClientModInitializer {
 					client.getSoundManager().soundEngine.reload();
 					showToast();
 				}else if (event.getKey() == InputConstants.KEY_Q){
-					client.gui.getChat().addMessage(new TranslatableComponent("reload_audio_driver.details"));
+					client.gui.getChat().addMessage(Component.translatable("reload_audio_driver.details"));
 				}
 			}
 		}
@@ -45,8 +45,8 @@ public class ReloadAudioDrivers implements ClientModInitializer {
 		SystemToast.add(
 				Minecraft.getInstance().getToasts(),
 				SystemToast.SystemToastIds.TUTORIAL_HINT,
-				new TranslatableComponent("reload_audio_driver.toast.title"),
-				new TranslatableComponent("reload_audio_driver.toast.body.success")
+				Component.translatable("reload_audio_driver.toast.title"),
+				Component.translatable("reload_audio_driver.toast.body.success")
 		);
 	}
 }
